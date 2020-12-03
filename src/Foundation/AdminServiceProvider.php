@@ -4,9 +4,8 @@
  * Github: https://github.com/codesinging
  */
 
-namespace CodeSinging\PinAdmin\Tests\Foundation;
+namespace CodeSinging\PinAdmin\Foundation;
 
-use CodeSinging\PinAdmin\Foundation\Admin;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
