@@ -15,7 +15,10 @@
     "autoload": {
         "psr-4": {
             "CodeSinging\\PinAdmin\\": "src"
-        }
+        },
+        "files": [
+            "src/Foundation/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
@@ -24,5 +27,12 @@
     },
     "require-dev": {
         "orchestra/testbench": "^6.5"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CodeSinging\\PinAdmin\\Foundation\\AdminServiceProvider"
+            ]
+        }
     }
 }

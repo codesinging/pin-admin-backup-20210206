@@ -44,6 +44,11 @@ class AdminTest extends TestCase
         self::assertEquals(Admin::NAME, $this->admin->name());
     }
 
+    public function testGuard()
+    {
+        self::assertEquals(Admin::GUARD, $this->admin->guard());
+    }
+
     public function testLabel()
     {
         self::assertEquals(Admin::LABEL, $this->admin->label());

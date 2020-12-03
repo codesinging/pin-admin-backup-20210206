@@ -6,6 +6,18 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use Exception;
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Factory;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
+
 class Admin
 {
     /**
@@ -119,5 +131,135 @@ class Admin
     public function packagePath(string $path = '')
     {
         return dirname(dirname(__DIR__)) . ($path ? DIRECTORY_SEPARATOR . $path : '');
+    }
+
+    /**
+     * Get or set the specified configuration value of PinAdmin application.
+     * @param string|array|null $key
+     * @param mixed|null $default
+     * @return Repository|mixed
+     */
+    public function config($key = null, $default = null)
+    {
+        if (is_null($key)) {
+            return config();
+        }
+        if (is_array($key)) {
+            $arr = [];
+            foreach ($key as $k => $v) {
+                $arr[$this->label($k, '.')] = $v;
+            }
+            return config($arr);
+        }
+        return config($this->label($key, '.'), $default);
+    }
+
+    /**
+     * Generate the URL of PinAdmin to a named route.
+     *
+     * @param array|string $name
+     * @param mixed $parameters
+     * @param bool $absolute
+     *
+     * @return string
+     */
+    public function route($name, $parameters = [], $absolute = true)
+    {
+        $name = self::LABEL . '.' . $name;
+        return route($name, $parameters, $absolute);
+    }
+
+    /**
+     * Generate a url for the PinAdmin application.
+     *
+     * @param null|string $path
+     * @param array $parameters
+     * @param bool|null $secure
+     *
+     * @return Application|UrlGenerator|string
+     */
+    public function url(string $path = null, array $parameters = [], $secure = null)
+    {
+        if (!is_null($path)) {
+            $path = $this->config('route') . Str::start($path, '/');
+        }
+        return url($path, $parameters, $secure);
+    }
+
+    /**
+     * Get a absolute url for the PinAdmin application.
+     *
+     * @param string $path
+     * @param array $parameters
+     *
+     * @return string
+     */
+    public function link(string $path = '', array $parameters = [])
+    {
+        $link = '/' . $this->config('route_prefix');
+        if ($path) {
+            $link .= Str::start($path, '/');
+        }
+        if ($parameters) {
+            $link .= '?' . http_build_query($parameters);
+        }
+        return $link;
+    }
+
+    /**
+     * The home's link of the PinAdmin application.
+     * @return string
+     */
+    public function home()
+    {
+        return $this->link($this->config('home'));
+    }
+
+    /**
+     * Get the assets path of PinAdmin.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function asset(string $path = '')
+    {
+        if (Str::startsWith($path, ['https://', 'http://', '//', '/'])) {
+            return $path;
+        }
+        return '/static/vendor/' . Str::kebab($this->label($path, '/'));
+    }
+
+    /**
+     * Get the path to a versioned Mix file of the PinAdmin application.
+     *
+     * @param string $path
+     *
+     * @return HtmlString|string
+     * @throws Exception
+     */
+    public function mix(string $path)
+    {
+        return mix($path, $this->asset());
+    }
+
+    /**
+     * Get the available auth instance with guard `admin`.
+     *
+     * @return Factory|Guard|StatefulGuard
+     */
+    public function auth()
+    {
+        return Auth::guard($this->guard());
+    }
+
+    /**
+     * Get the currently authenticated user.
+     *
+     * @return Authenticatable|null
+     */
+    public function user()
+    {
+        return $this->auth()->user();
     }
 }
