@@ -5,12 +5,14 @@
  */
 
 use CodeSinging\PinAdmin\Foundation\Admin;
+use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\HtmlString;
 
 if (!function_exists('admin')) {
@@ -134,6 +136,32 @@ if (!function_exists('admin_mix')) {
     function admin_mix(string $path)
     {
         return Admin::app()->mix($path);
+    }
+}
+
+if (!function_exists('admin_template')) {
+    /**
+     * Get the PinAdmin view template.
+     * @param string $path
+     * @return string
+     */
+    function admin_template(string $path)
+    {
+        return Admin::app()->template($path);
+    }
+}
+
+if (!function_exists('admin_view')) {
+    /**
+     * Get the view for PinAdmin.
+     * @param $view
+     * @param array $data
+     * @param array $mergeData
+     * @return Application|\Illuminate\Contracts\View\Factory|View
+     */
+    function admin_view($view, $data = [], $mergeData = [])
+    {
+        return Admin::app()->view($view, $data, $mergeData);
     }
 }
 

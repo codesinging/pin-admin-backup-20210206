@@ -14,6 +14,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
@@ -142,7 +143,7 @@ class Admin
     public function config($key = null, $default = null)
     {
         if (is_null($key)) {
-            return config();
+            return config($this->label());
         }
         if (is_array($key)) {
             $arr = [];
@@ -241,6 +242,28 @@ class Admin
     public function mix(string $path)
     {
         return mix($path, $this->asset());
+    }
+
+    /**
+     * Get the PinAdmin view template.
+     * @param string $path
+     * @return string
+     */
+    public function template(string $path)
+    {
+        return $this->label($path, '::');
+    }
+
+    /**
+     * Get the view for PinAdmin.
+     * @param $view
+     * @param array $data
+     * @param array $mergeData
+     * @return Application|\Illuminate\Contracts\View\Factory|View
+     */
+    public function view($view, $data = [], $mergeData = [])
+    {
+        return view(admin_template($view), $data, $mergeData);
     }
 
     /**

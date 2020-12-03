@@ -6,6 +6,10 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use CodeSinging\PinAdmin\Console\AdminCommand;
+use CodeSinging\PinAdmin\Console\InstallCommand;
+use CodeSinging\PinAdmin\Console\ListCommand;
+use CodeSinging\PinAdmin\Http\Middleware\AdminAuthenticate;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,6 +20,9 @@ class AdminServiceProvider extends ServiceProvider
      * @var array
      */
     protected $commands = [
+        AdminCommand::class,
+        InstallCommand::class,
+        ListCommand::class,
     ];
 
     /**
@@ -23,12 +30,14 @@ class AdminServiceProvider extends ServiceProvider
      * @var array
      */
     protected $middlewares = [
+        'admin.auth' => AdminAuthenticate::class,
     ];
 
     /**
      * Register PinAdmin services.
      */
-    public function register(){
+    public function register()
+    {
         $this->registerBinding();
         $this->registerCommands();
         $this->registerMiddleware();
@@ -37,8 +46,10 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Bootstrap PinAdmin services.
      */
-    public function boot(){
+    public function boot()
+    {
         $this->loadRoutes();
+        $this->loadViews();
         $this->publishResources();
         $this->configureAuthGuard();
     }
@@ -77,8 +88,12 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Publish PinAdmin resources.
      */
-    protected function publishResources(): void{
-
+    protected function publishResources(): void
+    {
+        $this->publishes([
+            admin()->packagePath('publish/config') => config_path(),
+            admin()->packagePath('publish/routes') => base_path('routes'),
+        ], admin_label());
     }
 
     /**
@@ -86,9 +101,19 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function loadRoutes(): void
     {
+        $this->loadRoutesFrom(admin()->packagePath('routes/admin.php'));
+
         if (is_file($route = app()->basePath('routes/admin.php'))) {
             $this->loadRoutesFrom($route);
         }
+    }
+
+    /**
+     * Load views of PinAdmin.
+     */
+    public function loadViews(): void
+    {
+        $this->loadViewsFrom(admin()->packagePath('resources/views'), admin_label());
     }
 
     /**
@@ -96,6 +121,9 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function configureAuthGuard(): void
     {
-
+        config([
+            'auth.guards' => array_merge(config('auth.guards'), admin()->config('guards', [])),
+            'auth.providers' => array_merge(config('auth.providers'), admin()->config('providers', []))
+        ]);
     }
 }
