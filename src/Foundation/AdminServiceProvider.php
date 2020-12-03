@@ -93,6 +93,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->publishes([
             admin()->packagePath('publish/config') => config_path(),
             admin()->packagePath('publish/routes') => base_path('routes'),
+            admin()->packagePath('publish/assets') => public_path('static/vendor/'.admin_label())
         ], admin_label());
     }
 

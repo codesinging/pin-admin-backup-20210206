@@ -8,5 +8,17 @@
         "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "dependencies": {
+        "element-ui": "^2.14.1",
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+        "vue": "^2.6.12"
+    },
+    "devDependencies": {
+        "autoprefixer": "^9",
+        "laravel-mix": "^5.0.9",
+        "particles.js": "^2.0.0",
+        "postcss": "^7",
+        "vue-template-compiler": "^2.6.12"
     }
 }
