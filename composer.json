@@ -1,38 +1,38 @@
 {
-    "name": "codesinging/pin-admin",
-    "description": "Rapidly build administration panels for Laravel.",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "codesinging",
-            "email": "codesinging@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">7.1",
-        "laravel/framework": "^8.17"
-    },
-    "autoload": {
-        "psr-4": {
-            "CodeSinging\\PinAdmin\\": "src"
-        },
-        "files": [
-            "src/Foundation/helpers.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "CodeSinging\\PinAdmin\\Tests\\": "tests"
-        }
-    },
-    "require-dev": {
-        "orchestra/testbench": "^6.5"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "CodeSinging\\PinAdmin\\Foundation\\AdminServiceProvider"
-            ]
-        }
+  "name": "codesinging/pin-admin",
+  "description": "Rapidly build administration panels for Laravel.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "codesinging",
+      "email": "codesinging@gmail.com"
     }
+  ],
+  "require": {
+    "php": ">7.1",
+    "laravel/framework": "^8.17"
+  },
+  "autoload": {
+    "psr-4": {
+      "CodeSinging\\PinAdmin\\": "src"
+    },
+    "files": [
+      "src/Foundation/helpers.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CodeSinging\\PinAdmin\\Tests\\": "tests"
+    }
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6.5"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "CodeSinging\\PinAdmin\\Foundation\\AdminServiceProvider"
+      ]
+    }
+  }
 }

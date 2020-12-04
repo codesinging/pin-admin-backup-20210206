@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Console;
 
+use CodeSinging\PinAdmin\Database\Seeders\AdminUserSeeder;
 use CodeSinging\PinAdmin\Foundation\AdminServiceProvider;
 
 class InstallCommand extends Command
@@ -25,6 +26,13 @@ class InstallCommand extends Command
     protected $description = 'Install the PinAdmin application';
 
     /**
+     * @var array
+     */
+    protected $seeders = [
+        AdminUserSeeder::class,
+    ];
+
+    /**
      * Execute the console command.
      *
      * @return void
@@ -33,6 +41,7 @@ class InstallCommand extends Command
     {
         $this->publishResources();
         $this->migrateDatabase();
+        $this->seedDatabase();
     }
 
     /**
@@ -60,6 +69,19 @@ class InstallCommand extends Command
     protected function migrateDatabase(): void
     {
         $this->title('Migrating database...');
+
         $this->call('migrate');
+    }
+
+    /**
+     * Seed database.
+     */
+    protected function seedDatabase(): void
+    {
+        $this->title('Seeding database...');
+
+        foreach ($this->seeders as $seeder) {
+            $this->call('db:seed', ['--class' => $seeder]);
+        }
     }
 }
