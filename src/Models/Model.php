@@ -6,7 +6,9 @@
 
 namespace CodeSinging\PinAdmin\Models;
 
+use CodeSinging\PinAdmin\Models\Support\ListsTrait;
+
 class Model extends \Illuminate\Database\Eloquent\Model
 {
-
+    use ListsTrait;
 }

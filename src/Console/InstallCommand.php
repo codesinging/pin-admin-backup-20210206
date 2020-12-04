@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Console;
 
+use CodeSinging\PinAdmin\Database\Seeders\AdminMenuSeeder;
 use CodeSinging\PinAdmin\Database\Seeders\AdminUserSeeder;
 use CodeSinging\PinAdmin\Foundation\AdminServiceProvider;
 
@@ -30,6 +31,7 @@ class InstallCommand extends Command
      */
     protected $seeders = [
         AdminUserSeeder::class,
+        AdminMenuSeeder::class,
     ];
 
     /**

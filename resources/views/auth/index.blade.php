@@ -4,7 +4,7 @@
     <div id="app" class="h-full flex items-center justify-center">
         <particles-js></particles-js>
 
-        <el-card class="login-card z-10 -mt-20" v-loading="statuses.login||statuses.redirect">
+        <el-card class="login-card z-10" v-loading="statuses.login||statuses.redirect">
             <div slot="header">
                 <span>用户登录</span>
             </div>
@@ -22,7 +22,7 @@
                     </el-input>
                 </el-form-item>
 
-                <div>
+                <div class="text-center">
                     <el-button type="primary" class="w-full" @click="onSubmit">登录</el-button>
                 </div>
             </el-form>
@@ -48,12 +48,12 @@
                 }
             },
             methods: {
-                onSubmit(){
-                    this.$refs.form.validate(valid=>{
-                        if (valid){
-                            this.$http.post('auth/login', this.user, {label: 'login'}).then(res=>{
+                onSubmit() {
+                    this.$refs.form.validate(valid => {
+                        if (valid) {
+                            this.$http.post('auth/login', this.user, {label: 'login'}).then(res => {
                                 this.$true('redirect')
-                                setTimeout(()=>{
+                                setTimeout(() => {
                                     location.href = adminBaseUrl
                                 }, 1000)
                             })

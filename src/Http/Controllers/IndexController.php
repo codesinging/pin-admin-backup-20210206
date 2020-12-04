@@ -6,10 +6,13 @@
 
 namespace CodeSinging\PinAdmin\Http\Controllers;
 
+use CodeSinging\PinAdmin\Models\AdminMenu;
+
 class IndexController extends Controller
 {
     public function index()
     {
-        return $this->adminView('index.index');
+        $adminMenus = AdminMenu::all();
+        return $this->adminView('index.index', compact('adminMenus'));
     }
 }
