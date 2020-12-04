@@ -11,6 +11,8 @@ Route::prefix(admin_config('route_prefix'))
 
         Route::middleware(['web'])->group(function () {
             Route::get('/auth', [\CodeSinging\PinAdmin\Http\Controllers\AuthController::class, 'index']);
+            Route::post('/auth/login', [\CodeSinging\PinAdmin\Http\Controllers\AuthController::class, 'login']);
+            Route::get('/auth/logout', [\CodeSinging\PinAdmin\Http\Controllers\AuthController::class, 'logout']);
         });
 
         Route::middleware(['web', 'admin.auth:' . admin()->guard()])->group(function () {

@@ -4,12 +4,12 @@
     <div id="app" class="h-full flex items-center justify-center">
         <particles-js></particles-js>
 
-        <el-card class="login-card z-10 -mt-20" v-loading="statuses.login">
+        <el-card class="login-card z-10 -mt-20" v-loading="statuses.login||statuses.redirect">
             <div slot="header">
                 <span>用户登录</span>
             </div>
 
-            <el-form ref="form" :model="user" :rules="rules" :disabled="statuses.login">
+            <el-form ref="form" :model="user" :rules="rules" :disabled="statuses.login||statuses.redirect">
                 <el-form-item prop="name">
                     <el-input v-model="user.name" placeholder="登录账号">
                         <template slot="prepend">登录账号</template>
@@ -52,7 +52,10 @@
                     this.$refs.form.validate(valid=>{
                         if (valid){
                             this.$http.post('auth/login', this.user, {label: 'login'}).then(res=>{
-                                console.log(res)
+                                this.$true('redirect')
+                                setTimeout(()=>{
+                                    location.href = adminBaseUrl
+                                }, 1000)
                             })
                         } else {
                             this.$message.warning('表单验证未通过，请重新填写。')

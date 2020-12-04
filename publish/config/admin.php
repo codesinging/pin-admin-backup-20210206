@@ -69,7 +69,7 @@ return [
     'providers' => [
         'admin_users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\AdminUser::class,
+            'model' => \CodeSinging\PinAdmin\Models\AdminUser::class,
         ]
     ],
 ];
