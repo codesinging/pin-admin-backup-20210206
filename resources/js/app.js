@@ -1,5 +1,7 @@
 window.Vue = require('vue')
 
+window.fullscreen = require('screenfull')
+
 require('./element-ui')
 
 require('./admin')

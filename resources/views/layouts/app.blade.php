@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', $baseData['pageTitle'])</title>
+    <link rel="icon" href="{{ admin_asset('images/favicon.ico') }}">
     <link rel="stylesheet" href="{{ admin_mix('app.css') }}">
     @yield('style')
     <script>
