@@ -10,7 +10,7 @@ export default {
     props: {
         number: {
             type: Number,
-            default: 100,
+            default: 60,
         },
         color: {
             type: [String, Array],

@@ -1,8 +1,12 @@
 window.Vue = require('vue')
 
-window.ElementUI = require('element-ui')
-Vue.use(ElementUI, {
-    size: 'medium'
-})
+require('./element-ui')
+
+require('./admin')
+
+require('./mixins')
+
+require('./http')
 
 require('./components')
+

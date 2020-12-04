@@ -50,6 +50,7 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->loadRoutes();
         $this->loadViews();
+        $this->loadMigrations();
         $this->publishResources();
         $this->configureAuthGuard();
     }
@@ -100,7 +101,7 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Load PinAdmin application routes.
      */
-    public function loadRoutes(): void
+    protected function loadRoutes(): void
     {
         $this->loadRoutesFrom(admin()->packagePath('routes/admin.php'));
 
@@ -112,9 +113,17 @@ class AdminServiceProvider extends ServiceProvider
     /**
      * Load views of PinAdmin.
      */
-    public function loadViews(): void
+    protected function loadViews(): void
     {
         $this->loadViewsFrom(admin()->packagePath('resources/views'), admin_label());
+    }
+
+    /**
+     * Load database migrations.
+     */
+    protected function loadMigrations(): void
+    {
+        $this->loadMigrationsFrom(admin()->packagePath('database/migrations'));
     }
 
     /**

@@ -32,6 +32,7 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->publishResources();
+        $this->migrateDatabase();
     }
 
     /**
@@ -53,4 +54,12 @@ class InstallCommand extends Command
         $this->call('vendor:publish', ['--provider' => AdminServiceProvider::class, '--force' => true]);
     }
 
+    /**
+     * Migrate database.
+     */
+    protected function migrateDatabase(): void
+    {
+        $this->title('Migrating database...');
+        $this->call('migrate');
+    }
 }

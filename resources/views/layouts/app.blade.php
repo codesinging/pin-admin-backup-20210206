@@ -6,8 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title', admin_config('name'))</title>
     <link rel="stylesheet" href="{{ admin_mix('app.css') }}">
-    @yield('header')
     @yield('style')
+    <script>
+        let adminCsrfToken = '{{ csrf_token() }}';
+        let adminBaseUrl = '';
+    </script>
+    @yield('header')
 </head>
 <body>
 <script src="{{ admin_mix('app.js') }}"></script>
