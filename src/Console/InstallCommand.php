@@ -9,6 +9,7 @@ namespace CodeSinging\PinAdmin\Console;
 use CodeSinging\PinAdmin\Database\Seeders\AdminMenuSeeder;
 use CodeSinging\PinAdmin\Database\Seeders\AdminUserSeeder;
 use CodeSinging\PinAdmin\Foundation\AdminServiceProvider;
+use Mews\Captcha\CaptchaServiceProvider;
 
 class InstallCommand extends Command
 {
@@ -63,6 +64,7 @@ class InstallCommand extends Command
         $this->title('Publishing resources...');
 
         $this->call('vendor:publish', ['--provider' => AdminServiceProvider::class, '--force' => true]);
+        $this->call('vendor:publish', ['--provider' => CaptchaServiceProvider::class, '--force' => true]);
     }
 
     /**
