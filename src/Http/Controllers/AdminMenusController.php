@@ -27,14 +27,6 @@ class AdminMenusController extends Controller
 
     public function store(AdminMenu $adminMenu, AdminMenuRequest $request)
     {
-        $request->validate([
-            'password' => ['required'],
-            'name' => ['unique:admin_users']
-        ], [
-            'password.required' => '密码不能为空',
-            'name.unique' => '用户名称已存在',
-        ]);
-
         $result = $adminMenu->fill($request->all())->save();
 
         return $result ? $this->success('添加成功') : $this->error('添加失败');
