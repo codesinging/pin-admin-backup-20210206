@@ -15,19 +15,7 @@ class AdminUsersController extends Controller
 {
     public function index(ModelView $view)
     {
-
-        $view->table->idColumn();
-        $view->table->column('name', '名称');
-        $view->table->createdAtColumn('创建时间');
-        $view->table->updatedAtColumn('创建时间');
-
-        $view->form->item('id', 'ID');
-
-        $view->dialog->title('编辑用户');
-
-        return $view->render();
-
-//        return $this->adminView('admin_users.index');
+        return $this->adminView('admin_users.index');
     }
 
     public function lists(AdminUser $adminUser)
