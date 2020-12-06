@@ -19,12 +19,17 @@
             </el-table-column>
             <el-table-column prop="sort" label="排列序号" align="center" width="132">
                 <template slot-scope="scope">
-                    <el-input-number v-model="scope.row.sort" @change="onSortChange(scope.row)" size="mini" v-loading="statuses['sort_'+scope.row.id]"></el-input-number>
+                    <el-input-number v-model="scope.row.sort" @change="onDataUpdate(scope.row, 'sort')" size="mini" v-loading="statuses['sort_'+scope.row.id]"></el-input-number>
                 </template>
             </el-table-column>
             <el-table-column prop="status" label="状态" align="center" width="100">
                 <template slot-scope="scope">
-                    <el-switch v-model="scope.row.status" @change="onStatusChange(scope.row)" size="mini" :disabled="statuses['status_'+scope.row.id]" v-loading="statuses['status_'+scope.row.id]"></el-switch>
+                    <el-switch v-model="scope.row.status" @change="onDataUpdate(scope.row, 'sort')" size="mini" :disabled="statuses['status_'+scope.row.id]" v-loading="statuses['status_'+scope.row.id]"></el-switch>
+                </template>
+            </el-table-column>
+            <el-table-column prop="is_opened" label="是否展开" align="center" width="100">
+                <template slot-scope="scope">
+                    <el-switch v-model="scope.row.is_opened" @change="onDataUpdate(scope.row, 'open')" size="mini" :disabled="statuses['open_'+scope.row.id]" v-loading="statuses['open_'+scope.row.id]"></el-switch>
                 </template>
             </el-table-column>
             <el-table-column label="操作" align="center">
@@ -180,14 +185,8 @@
                     })
                 },
 
-                onSortChange(row){
-                    this.$http.put('admin_menus/' + row.id, row, {label: 'sort_' + row.id}).then(res => {
-                        this.refreshLists()
-                    })
-                },
-
-                onStatusChange(row){
-                    this.$http.put('admin_menus/' + row.id, row, {label: 'status_' + row.id}).then(res => {
+                onDataUpdate(row, label){
+                    this.$http.put('admin_menus/' + row.id, row, {label: label + '_' + row.id}).then(res => {
                         this.refreshLists()
                     })
                 },
