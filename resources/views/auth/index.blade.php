@@ -41,7 +41,7 @@
 
 
                 <div class="text-center">
-                    <el-button type="primary" class="w-full" @click="onSubmit">登录</el-button>
+                    <el-button type="primary" class="w-full" @click="onSubmit" size="default">登录</el-button>
                 </div>
             </el-form>
         </el-card>

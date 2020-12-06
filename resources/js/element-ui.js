@@ -1,3 +1,5 @@
 window.ElementUI = require('element-ui')
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, {
+    size: 'medium',
+})
