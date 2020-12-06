@@ -79880,9 +79880,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 window.ElementUI = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
-Vue.use(ElementUI, {
-  size: 'medium'
-});
+Vue.use(ElementUI);
 
 /***/ }),
 

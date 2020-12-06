@@ -17,7 +17,7 @@
                 </el-form-item>
 
                 <el-form-item prop="password" :rules="rules.password">
-                    <el-input v-model="user.password" placeholder="登录密码">
+                    <el-input v-model="user.password" placeholder="登录密码" show-password>
                         <div slot="prepend" class="w-16">登录密码</div>
                     </el-input>
                 </el-form-item>
