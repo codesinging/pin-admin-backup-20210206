@@ -6,6 +6,7 @@
 
 namespace CodeSinging\PinAdmin\Foundation;
 
+use Closure;
 use Exception;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -16,6 +17,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
@@ -284,5 +286,18 @@ class Admin
     public function user()
     {
         return $this->auth()->user();
+    }
+
+    /**
+     * Set routes with middleware and prefix of PinAdmin.
+     * @param Closure $closure
+     */
+    public function routeGroup(Closure $closure)
+    {
+        Route::prefix(admin_config('route_prefix'))
+            ->middleware(['web', 'admin.auth:' . admin()->guard()])
+            ->group(function () use ($closure) {
+                call_user_func($closure);
+            });
     }
 }
