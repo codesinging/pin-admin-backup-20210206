@@ -24,6 +24,9 @@ Route::prefix(admin_config('route_prefix'))
             Route::get('admin_users/lists', [\CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class, 'lists'])->name('admin_users.lists');
             Route::resource('admin_users', \CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class)->except('create', 'edit');
 
+            Route::get('admin_menus/lists', [\CodeSinging\PinAdmin\Http\Controllers\AdminMenusController::class, 'lists'])->name('admin_menus.lists');
+            Route::resource('admin_menus', \CodeSinging\PinAdmin\Http\Controllers\AdminMenusController::class)->except('create', 'edit');
+
         });
 
     });

@@ -12,9 +12,21 @@
         <el-table :data="lists.data" v-loading="statuses.refresh" border class="mt-3">
             <el-table-column type="selection" align="center"></el-table-column>
             <el-table-column prop="id" label="ID" width="80" align="center"></el-table-column>
-            <el-table-column prop="name" label="名称"></el-table-column>
-            <el-table-column prop="created_at" label="创建时间" align="center"></el-table-column>
-            <el-table-column prop="updated_at" label="更新时间" align="center"></el-table-column>
+            <el-table-column prop="tree.name" label="名称" class-name="font-mono"></el-table-column>
+            <el-table-column prop="url" label="地址"></el-table-column>
+            <el-table-column prop="icon" label="图标" align="center" width="80">
+                <template slot-scope="scope"><i v-if="scope.row.icon" :class="scope.row.icon"></i></template>
+            </el-table-column>
+            <el-table-column prop="sort" label="排列序号" align="center" width="132">
+                <template slot-scope="scope">
+                    <el-input-number v-model="scope.row.sort" @change="onSortChange(scope.row)" size="mini" v-loading="statuses['sort_'+scope.row.id]"></el-input-number>
+                </template>
+            </el-table-column>
+            <el-table-column prop="status" label="状态" align="center" width="100">
+                <template slot-scope="scope">
+                    <el-switch v-model="scope.row.status" @change="onStatusChange(scope.row)" size="mini" :disabled="statuses['status_'+scope.row.id]" v-loading="statuses['status_'+scope.row.id]"></el-switch>
+                </template>
+            </el-table-column>
             <el-table-column label="操作" align="center">
                 <div slot-scope="scope" class="space-x-2">
                     <el-button @click="onEditButtonClick(scope.row)" type="primary" size="mini" icon="el-icon-edit">修改</el-button>
@@ -40,17 +52,29 @@
 
         <el-dialog :visible.sync="editDialog.visible" width="50%" @opened="onEditDialogOpened">
 
-            <el-form ref="form" :model="formData" :rules="formRules[formMode]">
+            <el-form ref="form" :model="formData" :rules="formRules[formMode]" label-position="top">
+
+                <el-form-item label="上级菜单" prop="parent_id">
+                    <el-select v-model="formData.parent_id">
+                        <el-option label="做为顶级菜单" :value="0"></el-option>
+                        <el-option v-for="menu in lists.data" :disabled="menu.parent_id>0 || menu.id===formData.id" :key="menu.id" :label="menu.tree.name" :value="menu.id"></el-option>
+                    </el-select>
+                </el-form-item>
+
                 <el-form-item prop="name" label="名称">
                     <el-input v-model="formData.name" placeholder="用户名称"></el-input>
                 </el-form-item>
 
-                <el-form-item prop="password" label="密码">
-                    <el-input v-model="formData.password" placeholder="登录密码" show-password></el-input>
+                <el-form-item prop="url" label="地址">
+                    <el-input v-model="formData.url" placeholder="地址"></el-input>
+                </el-form-item>
+
+                <el-form-item prop="sort" label="排列序号">
+                    <el-input-number v-model="formData.sort" placeholder="排列序号"></el-input-number>
                 </el-form-item>
             </el-form>
 
-            <div slot="title"><i class="el-icon-edit"></i> 编辑用户</div>
+            <div slot="title"><i class="el-icon-edit"></i> 编辑菜单</div>
 
             <div slot="footer" class="flex items-center justify-between">
                 <div></div>
@@ -73,9 +97,6 @@
                         add: {
                             name: [
                                 {required: true, message: '名称不能为空', trigger: 'blur'},
-                            ],
-                            password: [
-                                {required: true, message: '密码不能为空', trigger: 'blur'},
                             ],
                         },
                         edit: {
@@ -115,7 +136,7 @@
                 },
 
                 refreshLists() {
-                    this.$http.get('admin_users/lists', {
+                    this.$http.get('admin_menus/lists', {
                         label: 'refresh',
                         params: {
                             pageable: this.lists.pageable,
@@ -131,12 +152,12 @@
                     this.$refs.form.validate(valid => {
                         if (valid) {
                             if (this.formMode === 'add') {
-                                this.$http.post('admin_users', this.formData, {label: 'save'}).then(res => {
+                                this.$http.post('admin_menus', this.formData, {label: 'save'}).then(res => {
                                     this.refreshLists()
                                     this.editDialog.visible = false
                                 })
                             } else {
-                                this.$http.put('admin_users/' + this.formData.id, this.formData, {label: 'save'}).then(res => {
+                                this.$http.put('admin_menus/' + this.formData.id, this.formData, {label: 'save'}).then(res => {
                                     this.refreshLists()
                                     this.editDialog.visible = false
                                 })
@@ -148,7 +169,19 @@
                 },
 
                 onDelete(row) {
-                    this.$http.delete('admin_users/' + row.id, {label: 'delete_' + row.id}).then(res => {
+                    this.$http.delete('admin_menus/' + row.id, {label: 'delete_' + row.id}).then(res => {
+                        this.refreshLists()
+                    })
+                },
+
+                onSortChange(row){
+                    this.$http.put('admin_menus/' + row.id, row, {label: 'sort_' + row.id}).then(res => {
+                        this.refreshLists()
+                    })
+                },
+
+                onStatusChange(row){
+                    this.$http.put('admin_menus/' + row.id, row, {label: 'status_' + row.id}).then(res => {
                         this.refreshLists()
                     })
                 },

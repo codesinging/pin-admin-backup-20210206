@@ -12,7 +12,7 @@ use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
 {
-    public function index(AdminUser $adminUser)
+    public function index()
     {
         return $this->adminView('admin_users.index');
     }

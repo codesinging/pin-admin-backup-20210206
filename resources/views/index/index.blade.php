@@ -57,7 +57,7 @@
                         <el-tab-pane v-for="tab in tabs" :key="tab.url" :label="tab.name" :name="tab.url" :closable="!tab.is_home"></el-tab-pane>
                     </el-tabs>
                 </el-header>
-                <el-main class="p-0">
+                <el-main>
                     <template v-for="(tab,index) in tabs">
                         <main-frame :tab="tab" :key="index" :ref="tab.uid" v-show="tab.url === activeTabUrl"></main-frame>
                     </template>
