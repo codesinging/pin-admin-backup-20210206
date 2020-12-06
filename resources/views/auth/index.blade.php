@@ -23,7 +23,7 @@
                 </el-form-item>
 
                 <el-form-item prop="captcha" v-if="useCaptcha" :rules="rules.captcha">
-                    <el-input v-model="user.captcha">
+                    <el-input v-model="user.captcha" class="captcha-input">
                         <div slot="prepend" class="w-16 text-center">验 证 码</div>
                         <div slot="append" class="flex items-center justify-center">
                             <el-image
@@ -110,6 +110,11 @@
 
         .login-card {
             width: 500px;
+        }
+
+        .captcha-input .el-input-group__append{
+            padding: 1px !important;
+            min-width: 120px;
         }
     </style>
 @endsection
