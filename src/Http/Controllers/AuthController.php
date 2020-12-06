@@ -24,7 +24,7 @@ class AuthController extends Controller
             'password.required' => '密码不能为空',
         ]);
 
-        if (admin_config('captcha')){
+        if (admin_config('auth.captcha')){
             $request->validate([
                 'captcha' => ['required', 'captcha'],
             ], [

@@ -10,7 +10,8 @@
   ],
   "require": {
     "php": ">7.1",
-    "laravel/framework": "^8.17"
+    "laravel/framework": "^8.17",
+    "mews/captcha": "^3.2"
   },
   "autoload": {
     "psr-4": {

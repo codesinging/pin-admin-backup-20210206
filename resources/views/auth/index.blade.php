@@ -9,18 +9,36 @@
                 <span>用户登录</span>
             </div>
 
-            <el-form ref="form" :model="user" :rules="rules" :disabled="statuses.login||statuses.redirect">
-                <el-form-item prop="name">
+            <el-form ref="form" :model="user" :disabled="statuses.login||statuses.redirect" size="default">
+                <el-form-item prop="name" :rules="rules.name">
                     <el-input v-model="user.name" placeholder="登录账号">
-                        <template slot="prepend">登录账号</template>
+                        <div slot="prepend" class="w-16">登录账号</div>
                     </el-input>
                 </el-form-item>
 
-                <el-form-item prop="password">
+                <el-form-item prop="password" :rules="rules.password">
                     <el-input v-model="user.password" placeholder="登录密码">
-                        <template slot="prepend">登录密码</template>
+                        <div slot="prepend" class="w-16">登录密码</div>
                     </el-input>
                 </el-form-item>
+
+                <el-form-item prop="captcha" v-if="useCaptcha" :rules="rules.captcha">
+                    <el-input v-model="user.captcha">
+                        <div slot="prepend" class="w-16 text-center">验 证 码</div>
+                        <div slot="append" class="flex items-center justify-center">
+                            <el-image
+                                    v-show="statuses.loaded"
+                                    :src="captchaSrc"
+                                    class="cursor-pointer"
+                                    style="width:120px; height:36px;"
+                                    @click="onRefreshCaptcha"
+                                    @load="onCaptchaLoaded"
+                            ></el-image>
+                            <i v-if="!statuses.loaded" class="el-icon-loading"></i>
+                        </div>
+                    </el-input>
+                </el-form-item>
+
 
                 <div class="text-center">
                     <el-button type="primary" class="w-full" @click="onSubmit">登录</el-button>
@@ -29,6 +47,7 @@
         </el-card>
     </div>
     <script>
+        const captchaSrc = '{{ admin_config('auth.captcha') ? captcha_src() : '' }}'
         const app = new Vue({
             el: '#app',
             data() {
@@ -36,6 +55,7 @@
                     user: {
                         name: 'admin',
                         password: '123',
+                        captcha: '',
                     },
                     rules: {
                         name: [
@@ -44,7 +64,12 @@
                         password: [
                             {required: true, message: '登录密码不能为空', trigger: 'blur'},
                         ],
-                    }
+                        captcha: [
+                            {required: true, message: '请输入验证码', trigger: 'blur'},
+                        ],
+                    },
+                    useCaptcha: @json(admin_config('auth.captcha')),
+                    captchaSrc: captchaSrc,
                 }
             },
             methods: {
@@ -61,6 +86,16 @@
                             this.$message.warning('表单验证未通过，请重新填写。')
                         }
                     })
+                },
+                onRefreshCaptcha() {
+                    this.refreshCaptcha()
+                },
+                onCaptchaLoaded() {
+                    this.$true('loaded')
+                },
+                refreshCaptcha() {
+                    this.$false('loaded')
+                    this.captchaSrc = captchaSrc + (new Date()).getTime()
                 },
             }
         })
