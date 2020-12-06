@@ -40,7 +40,7 @@ class AdminMenuSeeder extends Seeder
         return [
             [
                 'name' => '首页',
-                'url' => 'index/home',
+                'url' => 'home',
                 'icon' => 'bi-house',
                 'sort' => 999,
                 'is_home' => 1,
@@ -52,12 +52,6 @@ class AdminMenuSeeder extends Seeder
                 'sort' => 9,
                 'is_opened' => 1,
                 'children' => [
-                    [
-                        'name' => '网站设置',
-                        'url' => 'settings',
-                        'icon' => 'bi-gear-fill',
-                        'sort' => 9,
-                    ],
                     [
                         'name' => '管理员管理',
                         'url' => 'admin_users',
