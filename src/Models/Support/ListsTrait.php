@@ -20,20 +20,20 @@ trait ListsTrait
     {
         $builder = $this->newQuery();
 
-        if ($query instanceof Closure){
+        if ($query instanceof Closure) {
             $builder = $query($builder);
         }
 
         $page = intval(request('page', 0));
         $size = intval(request('size', 0));
-        $pageable = $page>0;
+        $pageable = request()->boolean('pageable');
 
-        if ($pageable){
+        if ($pageable) {
             $pagination = $builder->paginate($size)->toArray();
 
             $lists = [
                 'page' => $pagination['current_page'],
-                'size' => (int) $pagination['per_page'],
+                'size' => (int)$pagination['per_page'],
                 'total' => $pagination['total'],
                 'data' => $pagination['data'],
             ];
@@ -49,7 +49,9 @@ trait ListsTrait
             ];
         }
 
-        if ($handler instanceof Closure){
+        $lists['pageable'] = $pageable;
+
+        if ($handler instanceof Closure) {
             foreach ($lists['data'] as $key => &$item) {
                 $item = $handler($item, $key, $lists);
             }

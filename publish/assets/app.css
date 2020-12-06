@@ -191389,4 +191389,16 @@ video {
 
 .el-loading-spinner .circular{
   display: inline-block;
+}.el-dialog__header {
+  padding: 20px;
+  border-bottom: solid #EBEEF5 1px;
+}
+
+.el-dialog__body {
+  padding: 20px;
+}
+
+.el-dialog__footer {
+  padding: 16px 20px;
+  border-top: solid #EBEEF5 1px;
 }
