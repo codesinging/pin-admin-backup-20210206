@@ -21,7 +21,7 @@ axios.interceptors.request.use(config => {
 
     Object.keys(error).forEach(key => {
         if (typeof error[key] !== 'function') {
-            console.log(`[${key}]`, error[key])
+            console.log(`[request.error: ${key}]`, error[key])
         }
     })
 
@@ -46,7 +46,7 @@ axios.interceptors.response.use(response => {
 
             Object.keys(response).forEach(key => {
                 if (typeof response[key] !== 'function') {
-                    console.log(`[${key}]`, response[key])
+                    console.log(`[response.data.error: ${key}]`, response[key])
                 }
             })
 
@@ -58,7 +58,7 @@ axios.interceptors.response.use(response => {
         }
         Object.keys(response).forEach(key => {
             if (typeof response[key] !== 'function') {
-                console.log(`[${key}]`, response[key])
+                console.log(`[response.status.error: ${key}]`, response[key])
             }
         })
     }
@@ -69,12 +69,16 @@ axios.interceptors.response.use(response => {
     }
 
     if (error.config.message) {
-        admin.message.error('网络请求错误')
+        let message = ''
+        if (error.response && error.response.data){
+            message = error.response.data.message
+        }
+        admin.message.error(message || '网络请求错误')
     }
 
     Object.keys(error).forEach(key => {
         if (typeof error[key] !== 'function') {
-            console.log(`[${key}]`, error[key])
+            console.log(`[response.error: ${key}]`, error[key])
         }
     })
 

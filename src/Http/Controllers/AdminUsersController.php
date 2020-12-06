@@ -8,21 +8,13 @@ namespace CodeSinging\PinAdmin\Http\Controllers;
 
 use CodeSinging\PinAdmin\Http\Requests\AdminUserRequest;
 use CodeSinging\PinAdmin\Models\AdminUser;
-use CodeSinging\PinAdmin\Viewless\Views\ModelView;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
 {
-    public function index(ModelView $view)
+    public function index(AdminUser $adminUser)
     {
-        $view->table->idColumn();
-        $view->table->column('name', '名称');
-        $view->table->createdAtColumn('创建时间');
-        $view->table->updatedAtColumn('更新时间');
-
-        $view->form->item('name', '名称')->input()->validate(['required'=>true, 'message' => '不能为空', 'trigger' => 'blur']);
-
-        return $view->render();
+        return $this->adminView('admin_users.index');
     }
 
     public function lists(AdminUser $adminUser)
@@ -35,12 +27,34 @@ class AdminUsersController extends Controller
     {
         $request->validate([
             'password' => ['required'],
+            'name' => ['unique:admin_users']
         ], [
             'password.required' => '密码不能为空',
+            'name.unique' => '用户名称已存在',
         ]);
 
         $result = $adminUser->fill($request->all())->save();
 
         return $result ? $this->success('添加成功') : $this->error('添加失败');
+    }
+
+    public function update(AdminUser $adminUser, AdminUserRequest $request)
+    {
+        $request->validate([
+            'name' => [Rule::unique('admin_users')->ignore($adminUser)]
+        ], [
+            'name.unique' => '用户名称已存在',
+        ]);
+
+        $result = $adminUser->fill($request->all())->save();
+
+        return $result ? $this->success('修改成功') : $this->error('修改失败');
+    }
+
+    public function destroy(AdminUser $adminUser)
+    {
+        return $adminUser->delete()
+            ? $this->success('删除成功')
+            : $this->error('删除失败');
     }
 }

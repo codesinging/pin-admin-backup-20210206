@@ -7,6 +7,7 @@
 namespace CodeSinging\PinAdmin\Models\Support;
 
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
 
 trait ListsTrait
 {
@@ -18,6 +19,7 @@ trait ListsTrait
      */
     public function lists(Closure $query = null, Closure $handler = null)
     {
+        /** @var Builder $builder */
         $builder = $this->newQuery();
 
         if ($query instanceof Closure) {

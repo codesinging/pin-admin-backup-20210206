@@ -21,9 +21,8 @@ Route::prefix(admin_config('route_prefix'))
 
             Route::get('/', [\CodeSinging\PinAdmin\Http\Controllers\IndexController::class, 'index']);
 
-            Route::get('/admin_users', [\CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class, 'index']);
-            Route::get('/admin_users/lists', [\CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class, 'lists']);
-            Route::post('/admin_users/store', [\CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class, 'store']);
+            Route::get('admin_users/lists', [\CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class, 'lists'])->name('admin_users.lists');
+            Route::resource('admin_users', \CodeSinging\PinAdmin\Http\Controllers\AdminUsersController::class)->except('create', 'edit');
 
         });
 

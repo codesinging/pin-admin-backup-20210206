@@ -1,0 +1,18 @@
+.el-table--medium .cell {
+    line-height: 30px;
+    min-height: 30px;
+}
+
+.el-table--medium td,
+.el-table--medium th {
+    padding: 8px 0;
+}
+
+.el-table__header th {
+    background-color: #f7fafc;
+}
+
+.el-table-column--selection .cell {
+    padding-left: 10px;
+    padding-right: 10px;
+}

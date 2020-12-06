@@ -79914,7 +79914,7 @@ axios.interceptors.request.use(function (config) {
   admin.message.error('发送网络请求错误');
   Object.keys(error).forEach(function (key) {
     if (typeof error[key] !== 'function') {
-      console.log("[".concat(key, "]"), error[key]);
+      console.log("[request.error: ".concat(key, "]"), error[key]);
     }
   });
   return Promise.reject(error);
@@ -79938,7 +79938,7 @@ axios.interceptors.response.use(function (response) {
 
       Object.keys(response).forEach(function (key) {
         if (typeof response[key] !== 'function') {
-          console.log("[".concat(key, "]"), response[key]);
+          console.log("[response.data.error: ".concat(key, "]"), response[key]);
         }
       });
       return Promise.reject(response.data.message);
@@ -79950,7 +79950,7 @@ axios.interceptors.response.use(function (response) {
 
     Object.keys(response).forEach(function (key) {
       if (typeof response[key] !== 'function') {
-        console.log("[".concat(key, "]"), response[key]);
+        console.log("[response.status.error: ".concat(key, "]"), response[key]);
       }
     });
   }
@@ -79962,12 +79962,18 @@ axios.interceptors.response.use(function (response) {
   }
 
   if (error.config.message) {
-    admin.message.error('网络请求错误');
+    var message = '';
+
+    if (error.response && error.response.data) {
+      message = error.response.data.message;
+    }
+
+    admin.message.error(message || '网络请求错误');
   }
 
   Object.keys(error).forEach(function (key) {
     if (typeof error[key] !== 'function') {
-      console.log("[".concat(key, "]"), error[key]);
+      console.log("[response.error: ".concat(key, "]"), error[key]);
     }
   });
   return Promise.reject(error);
