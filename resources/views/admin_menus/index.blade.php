@@ -69,6 +69,12 @@
                     <el-input v-model="formData.url" placeholder="地址"></el-input>
                 </el-form-item>
 
+                <el-form-item prop="icon" label="图标">
+                    <el-input v-model="formData.icon" placeholder="图标">
+                        <template v-if="formData.icon" slot="append"><i :class="formData.icon"></i></template>
+                    </el-input>
+                </el-form-item>
+
                 <el-form-item prop="sort" label="排列序号">
                     <el-input-number v-model="formData.sort" placeholder="排列序号"></el-input-number>
                 </el-form-item>
