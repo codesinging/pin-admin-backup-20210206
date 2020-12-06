@@ -67408,7 +67408,7 @@ var render = function() {
                 "el-menu-item",
                 { key: sub.id, attrs: { index: sub.id.toString() } },
                 [
-                  _c("i", { class: sub.icon || "bi-chevron-double-right" }),
+                  _c("i", { class: sub.icon || "bi-chevron-right" }),
                   _vm._v(" "),
                   _c("span", { attrs: { slot: "title" }, slot: "title" }, [
                     _vm._v(_vm._s(sub.name))
