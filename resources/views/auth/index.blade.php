@@ -53,8 +53,8 @@
             data() {
                 return {
                     user: {
-                        name: 'admin',
-                        password: '123',
+                        name: '',
+                        password: '',
                         captcha: '',
                     },
                     rules: {

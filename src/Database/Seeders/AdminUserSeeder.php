@@ -16,7 +16,7 @@ class AdminUserSeeder extends Seeder
         AdminUser::truncate();
         AdminUser::create([
             'name' => 'admin',
-            'password' => '123',
+            'password' => 'admin888',
         ]);
     }
 }
