@@ -26,7 +26,7 @@ class Admin
     /**
      * The version of PinAdmin.
      */
-    const VERSION = '1.1.0';
+    const VERSION = '1.1.1';
 
     /**
      * The name of PinAdmin.
