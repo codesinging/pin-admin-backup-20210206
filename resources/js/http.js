@@ -70,8 +70,8 @@ axios.interceptors.response.use(response => {
 
     if (error.config.message) {
         let message = ''
-        if (error.response && error.response.data){
-            message = error.response.data.message
+        if (error.response && error.response.data && error.response.data.errors){
+            message = Object.values(error.response.data.errors)[0][0]
         }
         admin.message.error(message || '网络请求错误')
     }
