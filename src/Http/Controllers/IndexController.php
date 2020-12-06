@@ -15,4 +15,9 @@ class IndexController extends Controller
         $adminMenus = AdminMenu::all();
         return $this->adminView('index.index', compact('adminMenus'));
     }
+
+    public function home()
+    {
+        return $this->adminView('index.home');
+    }
 }
