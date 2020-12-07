@@ -8,12 +8,11 @@ namespace CodeSinging\PinAdmin\Http\Controllers;
 
 use CodeSinging\PinAdmin\Http\Requests\AdminUserRequest;
 use CodeSinging\PinAdmin\Models\AdminUser;
-use CodeSinging\PinAdmin\Viewless\Views\ModelView;
 use Illuminate\Validation\Rule;
 
 class AdminUsersController extends Controller
 {
-    public function index(ModelView $view)
+    public function index()
     {
         return $this->adminView('admin_users.index');
     }

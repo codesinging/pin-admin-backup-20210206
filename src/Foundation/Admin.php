@@ -16,6 +16,7 @@ use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Contracts\View\View;
+use Illuminate\Routing\PendingResourceRegistration;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\HtmlString;
@@ -295,9 +296,23 @@ class Admin
     public function routeGroup(Closure $closure)
     {
         Route::prefix(admin_config('route_prefix'))
+            ->name(admin_label() . '.')
             ->middleware(['web', 'admin.auth:' . admin()->guard()])
             ->group(function () use ($closure) {
                 call_user_func($closure);
             });
+    }
+
+    /**
+     * Set route resource.
+     * @param string $name
+     * @param string $controller
+     * @param array $options
+     * @return PendingResourceRegistration
+     */
+    public function routeResource(string $name, string $controller, array $options = [])
+    {
+        Route::get($name . '/lists', [$controller, 'lists'])->name($name . '.lists');
+        return Route::resource($name, $controller, $options);
     }
 }

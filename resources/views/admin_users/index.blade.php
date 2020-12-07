@@ -40,7 +40,7 @@
 
         <el-dialog :visible.sync="editDialog.visible" width="50%" @opened="onEditDialogOpened">
 
-            <el-form ref="form" :model="formData" :rules="formRules[formMode]">
+            <el-form ref="form" :model="formData" :rules="formRules[formMode]" label-position="top">
                 <el-form-item prop="name" label="名称">
                     <el-input v-model="formData.name" placeholder="用户名称"></el-input>
                 </el-form-item>

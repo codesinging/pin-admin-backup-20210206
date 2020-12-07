@@ -73,7 +73,7 @@ axios.interceptors.response.use(response => {
         if (error.response && error.response.data && error.response.data.errors){
             message = Object.values(error.response.data.errors)[0][0]
         }
-        admin.message.error(message || '网络请求错误')
+        admin.message.error(message || error.response.statusText || '网络请求错误')
     }
 
     Object.keys(error).forEach(key => {
