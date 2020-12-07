@@ -1,6 +1,6 @@
 window.admin = {
     name: 'PinAdmin',
-    version: '0.0.1',
+    version: adminVersion,
     statuses: {},
     stores: {},
 }

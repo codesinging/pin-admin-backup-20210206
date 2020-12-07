@@ -15,7 +15,16 @@
                             <i :class="menu.icon||'bi-chevron-double-right'"></i>
                             <span slot="title">@{{ menu.name }}</span>
                         </el-menu-item>
-                        <sub-menu v-else :menu="menu" :key="menu.id"></sub-menu>
+                        <el-submenu v-else :key="menu.id" :index="menu.id.toString()">
+                            <template slot="title">
+                                <i :class="menu.icon||'bi-chevron-double-right'"></i>
+                                <span slot="title">@{{ menu.name }}</span>
+                            </template>
+                            <el-menu-item v-for="submenu in menu.children" :index="submenu.id.toString()" :key="submenu.id">
+                                <i :class="submenu.icon||'bi-chevron-right'"></i>
+                                <span slot="title">@{{ submenu.name }}</span>
+                            </el-menu-item>
+                        </el-submenu>
                     </template>
                 </el-menu>
             </el-aside>

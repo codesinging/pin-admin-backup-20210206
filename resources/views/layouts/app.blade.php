@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ admin_mix('app.css') }}">
     @yield('style')
     <script>
+        let adminVersion = '{{ admin()->version() }}';
         let adminCsrfToken = '{{ csrf_token() }}';
         let adminBaseUrl = '{{ $baseData['baseUrl'] ?? '' }}';
     </script>
