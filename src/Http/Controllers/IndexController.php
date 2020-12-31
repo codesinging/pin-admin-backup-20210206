@@ -12,7 +12,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        $adminMenus = AdminMenu::all();
+        $adminMenus = AdminMenu::orderBy('sort', 'desc')->get();
         return $this->adminView('index.index', compact('adminMenus'));
     }
 
