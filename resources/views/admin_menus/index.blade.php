@@ -28,7 +28,7 @@
                 </template>
             </el-table-column>
             <el-table-column prop="is_opened" label="是否展开" align="center" width="100">
-                <template slot-scope="scope">
+                <template v-if="scope.row.tree.children.length>0" slot-scope="scope">
                     <el-switch v-model="scope.row.is_opened" @change="onDataUpdate(scope.row, 'open')" size="mini" :disabled="statuses['open_'+scope.row.id]" v-loading="statuses['open_'+scope.row.id]"></el-switch>
                 </template>
             </el-table-column>
