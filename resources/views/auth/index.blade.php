@@ -1,7 +1,7 @@
 @extends(admin_template('layouts.app'))
 
 @section('content')
-    <div id="app" class="h-full flex items-center justify-center">
+    <div id="app" class="h-full flex items-center justify-center" @keyup.enter="onSubmit">
         <particles-js></particles-js>
 
         <el-card class="login-card z-10" v-loading="statuses.login||statuses.redirect">
